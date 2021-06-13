@@ -120,7 +120,7 @@
                                                         <state key="normal" title="Button"/>
                                                         <buttonConfiguration key="configuration" style="plain" title="Connect">
                                                             <imageReference key="image" image="person.2" catalog="system"/>
-                                                            <backgroundConfiguration key="background">
+                                                            <backgroundConfiguration key="background" cornerRadius="12">
                                                                 <color key="backgroundColor" systemColor="systemBlueColor"/>
                                                             </backgroundConfiguration>
                                                             <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="font">

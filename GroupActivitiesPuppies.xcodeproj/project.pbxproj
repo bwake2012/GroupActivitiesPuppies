@@ -47,6 +47,7 @@
 		C472C00E26751FDF00319A91 /* GroupActivityHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupActivityHandler.swift; sourceTree = "<group>"; };
 		C472C0102675221700319A91 /* ChoosePuppyMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoosePuppyMessage.swift; sourceTree = "<group>"; };
 		C472C01226758BB100319A91 /* SnowyTricolorSheltie.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SnowyTricolorSheltie.png; sourceTree = "<group>"; };
+		C472C0142676787800319A91 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +64,7 @@
 		C41264592672A4B80035983F = {
 			isa = PBXGroup;
 			children = (
+				C472C0142676787800319A91 /* README.md */,
 				C41264642672A4B80035983F /* GroupActivitiesPuppies */,
 				C41264632672A4B80035983F /* Products */,
 			);

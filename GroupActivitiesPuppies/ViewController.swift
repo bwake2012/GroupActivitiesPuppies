@@ -129,6 +129,8 @@ extension ViewController: PuppyMessageDelegate {
 
             self.connectButton?.setImage(image, for: .normal)
             self.connectButton?.setTitle(text, for: .normal)
+
+            self.connectButton?.backgroundColor = self.canConnect ? .systemBlue : .systemGray
         }
     }
 
