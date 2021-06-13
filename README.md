@@ -2,6 +2,8 @@
 
 This is s proof-of-concept demonstrator for the new Group Activities for FaceTime available with iOS 15. 
 
+Here's a link to video of an [early version](https://youtu.be/utvN5USIeCU).
+
 ## Acknowledgments:
 
 ### [Build custom experiences with Group Activities](https://developer.apple.com/videos/play/wwdc2021/10187)
