@@ -13,6 +13,17 @@
 		C412646D2672A4B80035983F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C412646B2672A4B80035983F /* Main.storyboard */; };
 		C412646F2672A4B90035983F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C412646E2672A4B90035983F /* Assets.xcassets */; };
 		C41264722672A4B90035983F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C41264702672A4B90035983F /* LaunchScreen.storyboard */; };
+		C41264D02672A7380035983F /* blank.png in Resources */ = {isa = PBXBuildFile; fileRef = C41264C82672A7380035983F /* blank.png */; };
+		C41264D12672A7380035983F /* Boo.png in Resources */ = {isa = PBXBuildFile; fileRef = C41264C92672A7380035983F /* Boo.png */; };
+		C41264D42672A7380035983F /* corgi.png in Resources */ = {isa = PBXBuildFile; fileRef = C41264CC2672A7380035983F /* corgi.png */; };
+		C41264D52672A7380035983F /* Pontus.png in Resources */ = {isa = PBXBuildFile; fileRef = C41264CD2672A7380035983F /* Pontus.png */; };
+		C41264D62672A7380035983F /* AnnaAvatar.png in Resources */ = {isa = PBXBuildFile; fileRef = C41264CE2672A7380035983F /* AnnaAvatar.png */; };
+		C41264D72672A7380035983F /* Buddy.png in Resources */ = {isa = PBXBuildFile; fileRef = C41264CF2672A7380035983F /* Buddy.png */; };
+		C41264DE2672BC160035983F /* AmericanEskimo.png in Resources */ = {isa = PBXBuildFile; fileRef = C41264DD2672BC160035983F /* AmericanEskimo.png */; };
+		C41264E02672BE730035983F /* ChoosePuppyActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41264DF2672BE730035983F /* ChoosePuppyActivity.swift */; };
+		C472C00F26751FDF00319A91 /* GroupActivityHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C472C00E26751FDF00319A91 /* GroupActivityHandler.swift */; };
+		C472C0112675221700319A91 /* ChoosePuppyMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C472C0102675221700319A91 /* ChoosePuppyMessage.swift */; };
+		C472C01326758BB100319A91 /* SnowyTricolorSheltie.png in Resources */ = {isa = PBXBuildFile; fileRef = C472C01226758BB100319A91 /* SnowyTricolorSheltie.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +35,18 @@
 		C412646E2672A4B90035983F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C41264712672A4B90035983F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C41264732672A4B90035983F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C41264C82672A7380035983F /* blank.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blank.png; sourceTree = "<group>"; };
+		C41264C92672A7380035983F /* Boo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Boo.png; sourceTree = "<group>"; };
+		C41264CC2672A7380035983F /* corgi.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = corgi.png; sourceTree = "<group>"; };
+		C41264CD2672A7380035983F /* Pontus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Pontus.png; sourceTree = "<group>"; };
+		C41264CE2672A7380035983F /* AnnaAvatar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AnnaAvatar.png; sourceTree = "<group>"; };
+		C41264CF2672A7380035983F /* Buddy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Buddy.png; sourceTree = "<group>"; };
+		C41264DC2672BBDA0035983F /* GroupActivitiesPuppies.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = GroupActivitiesPuppies.entitlements; sourceTree = "<group>"; };
+		C41264DD2672BC160035983F /* AmericanEskimo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AmericanEskimo.png; sourceTree = "<group>"; };
+		C41264DF2672BE730035983F /* ChoosePuppyActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoosePuppyActivity.swift; sourceTree = "<group>"; };
+		C472C00E26751FDF00319A91 /* GroupActivityHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupActivityHandler.swift; sourceTree = "<group>"; };
+		C472C0102675221700319A91 /* ChoosePuppyMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoosePuppyMessage.swift; sourceTree = "<group>"; };
+		C472C01226758BB100319A91 /* SnowyTricolorSheltie.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SnowyTricolorSheltie.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,7 +79,12 @@
 		C41264642672A4B80035983F /* GroupActivitiesPuppies */ = {
 			isa = PBXGroup;
 			children = (
+				C41264DC2672BBDA0035983F /* GroupActivitiesPuppies.entitlements */,
+				C41264C72672A7100035983F /* Images */,
 				C41264652672A4B80035983F /* AppDelegate.swift */,
+				C41264DF2672BE730035983F /* ChoosePuppyActivity.swift */,
+				C472C0102675221700319A91 /* ChoosePuppyMessage.swift */,
+				C472C00E26751FDF00319A91 /* GroupActivityHandler.swift */,
 				C41264672672A4B80035983F /* SceneDelegate.swift */,
 				C41264692672A4B80035983F /* ViewController.swift */,
 				C412646B2672A4B80035983F /* Main.storyboard */,
@@ -65,6 +93,21 @@
 				C41264732672A4B90035983F /* Info.plist */,
 			);
 			path = GroupActivitiesPuppies;
+			sourceTree = "<group>";
+		};
+		C41264C72672A7100035983F /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				C41264DD2672BC160035983F /* AmericanEskimo.png */,
+				C41264CE2672A7380035983F /* AnnaAvatar.png */,
+				C41264C82672A7380035983F /* blank.png */,
+				C41264C92672A7380035983F /* Boo.png */,
+				C41264CF2672A7380035983F /* Buddy.png */,
+				C41264CC2672A7380035983F /* corgi.png */,
+				C41264CD2672A7380035983F /* Pontus.png */,
+				C472C01226758BB100319A91 /* SnowyTricolorSheltie.png */,
+			);
+			path = Images;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -125,9 +168,17 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C41264D72672A7380035983F /* Buddy.png in Resources */,
+				C41264D42672A7380035983F /* corgi.png in Resources */,
+				C41264D02672A7380035983F /* blank.png in Resources */,
+				C472C01326758BB100319A91 /* SnowyTricolorSheltie.png in Resources */,
+				C41264D62672A7380035983F /* AnnaAvatar.png in Resources */,
+				C41264D52672A7380035983F /* Pontus.png in Resources */,
 				C41264722672A4B90035983F /* LaunchScreen.storyboard in Resources */,
 				C412646F2672A4B90035983F /* Assets.xcassets in Resources */,
 				C412646D2672A4B80035983F /* Main.storyboard in Resources */,
+				C41264DE2672BC160035983F /* AmericanEskimo.png in Resources */,
+				C41264D12672A7380035983F /* Boo.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -141,6 +192,9 @@
 				C412646A2672A4B80035983F /* ViewController.swift in Sources */,
 				C41264662672A4B80035983F /* AppDelegate.swift in Sources */,
 				C41264682672A4B80035983F /* SceneDelegate.swift in Sources */,
+				C41264E02672BE730035983F /* ChoosePuppyActivity.swift in Sources */,
+				C472C00F26751FDF00319A91 /* GroupActivityHandler.swift in Sources */,
+				C472C0112675221700319A91 /* ChoosePuppyMessage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -287,6 +341,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = GroupActivitiesPuppies/GroupActivitiesPuppies.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 8G7W6WCEM9;
@@ -315,6 +370,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = GroupActivitiesPuppies/GroupActivitiesPuppies.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 8G7W6WCEM9;
