@@ -10,7 +10,7 @@ import GroupActivities
 
 class ViewController: UIViewController {
 
-    private var activityHandler: GroupActivityHandler?
+    private var activityHandler: GroupActivityHandler<ChoosePuppyActivity, ChoosePuppyMessage>?
 
     private var canConnect: Bool {
 
@@ -20,6 +20,11 @@ class ViewController: UIViewController {
     private var isConnected: Bool {
 
         return activityHandler?.isConnected ?? false
+    }
+
+    private var participantCount: Int {
+
+        return activityHandler?.participantCount ?? 0
     }
 
     @IBOutlet var statusLabel: UILabel?
@@ -52,7 +57,7 @@ class ViewController: UIViewController {
             preconditionFailure("Accessibility Identifier not defined for button tapped.")
         }
 
-        activityHandler?.send(puppyName: puppyName)
+        activityHandler?.send(message: ChoosePuppyMessage(puppyName: puppyName))
     }
 
     override func viewDidLoad() {
@@ -63,33 +68,40 @@ class ViewController: UIViewController {
         configurePuppyButtons()
         configureConnectButton()
 
-        activityHandler = GroupActivityHandler(delegate: self)
-        activityHandler?.handleSessions()
+        activityHandler = GroupActivityHandler(activity: ChoosePuppyActivity(), delegate: self)
+        activityHandler?.beginWaitingForSessions()
     }
-
 }
 
-extension ViewController: PuppyMessageDelegate {
+extension ViewController: GroupActivityHandlerDelegate {
 
     func connectionChanged() {
 
         DispatchQueue.main.async {
 
             self.configureConnectButton()
+
+            print("Connections: \(self.participantCount)")
         }
     }
 
-    func updatePuppy(name: String) {
+    func update<M: GroupActivityMessage>(message: M) {
+
+        // make certain the message is the right type
+        guard let message = message as? ChoosePuppyMessage else {
+
+            preconditionFailure("Updated with a GroupActivityMessage that is not a ChoosePuppyMessage!")
+        }
 
         DispatchQueue.main.async {
 
-            self.displayImage?.image = self.picture(for: name)
-            self.displayString?.text = name
+            self.displayImage?.image = self.picture(for: message.puppyName)
+            self.displayString?.text = message.puppyName
             self.statusLabel?.text = nil
         }
     }
 
-    func report(error: PuppyError) {
+    func report(error: Error) {
 
         DispatchQueue.main.async {
 
