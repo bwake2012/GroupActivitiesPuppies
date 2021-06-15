@@ -9,35 +9,44 @@ import Foundation
 import Combine
 import GroupActivities
 
-enum PuppyError: Error {
+protocol GroupActivityMessage: Codable {
 
-    case messageSendFail(Error)
-    case messageCatchupSendFail(Error)
+    var id: UUID { get }
+    var timestamp: Date { get }
 
-    var localizedDescription: String {
-
-        switch self {
-        case .messageSendFail(let error):
-            return "Choose Puppy message send failure: \(error.localizedDescription)"
-        case .messageCatchupSendFail(let error):
-            return "Choose Puppy catchup message send failure: \(error.localizedDescription)"
-        }
-    }
+    init?(payload: GroupActivityMessage)
 }
 
-protocol PuppyMessageDelegate: AnyObject {
+protocol GroupActivityHandlerDelegate: AnyObject {
 
     func connectionChanged()
-    func updatePuppy(name: String)
-    func report(error: PuppyError)
+    func update<M: GroupActivityMessage>(message: M)
+    func report(error: Error)
 }
 
-class GroupActivityHandler: NSObject {
+/// Contains the setup and session logic for GroupActivities.
+class GroupActivityHandler<GA: GroupActivity, GM: GroupActivityMessage>: NSObject {
 
-    var groupStateObserver = GroupStateObserver()
+    enum GroupActivityHandlerError: Error {
+
+        case messageSendFail(Error)
+        case messageCatchupSendFail(Error)
+
+        var localizedDescription: String {
+
+            switch self {
+            case .messageSendFail(let error):
+                return "Activity message send failure: \(error.localizedDescription)"
+            case .messageCatchupSendFail(let error):
+                return "Activity catchup message send failure: \(error.localizedDescription)"
+            }
+        }
+    }
+
+    private var groupStateObserver = GroupStateObserver()
     var isEligibleForGroupSession: Bool = false
 
-    weak var delegate: PuppyMessageDelegate?
+    private weak var delegate: GroupActivityHandlerDelegate?
 
     var canConnect: Bool {
 
@@ -49,22 +58,32 @@ class GroupActivityHandler: NSObject {
         return nil != groupSession
     }
 
-    var tasks = Set<Task.Handle<(), Never>>()
+    var participantCount: Int {
 
-    var messenger: GroupSessionMessenger?
+        return groupSession?.activeParticipants.count ?? 0
+    }
 
-    var groupSession: GroupSession<ChoosePuppyActivity>?
+    private var tasks = Set<Task.Handle<(), Never>>()
 
-    var latestMessage: ChoosePuppyMessage?
+    private var messenger: GroupSessionMessenger?
 
-    var subscriptions = Set<AnyCancellable>()
+    private var groupSession: GroupSession<GA>?
 
-    var activity: ChoosePuppyActivity?
+    private var activeParticipants: Set<Participant> = []
 
-    init(delegate: PuppyMessageDelegate) {
+    private var latestMessage: GM?
+
+    private var subscriptions = Set<AnyCancellable>()
+
+    private var activity: GA?
+
+    /// Create the activity handler, and set up an observer
+    /// for whether or not we have a FaceTime connection.
+    init(activity: GA, delegate: GroupActivityHandlerDelegate) {
 
         super.init()
 
+        self.activity = activity
         self.delegate = delegate
 
         groupStateObserver.$isEligibleForGroupSession.sink { [weak self] isElegibleForGroupSession in
@@ -76,9 +95,9 @@ class GroupActivityHandler: NSObject {
 
     func activate() {
 
-        activity = ChoosePuppyActivity()
-
         activity?.activate()
+
+        self.delegate?.connectionChanged()
     }
 
     func reset() {
@@ -86,28 +105,35 @@ class GroupActivityHandler: NSObject {
         latestMessage = nil
 
         // tear down existing group session
+        teardown()
+
+        groupSession?.leave()
+        groupSession = nil
+
+        delegate?.connectionChanged()
+    }
+
+    private func teardown() {
+
         messenger = nil
         tasks.forEach { $0.cancel() }
         tasks = []
         subscriptions = []
-
-        groupSession?.leave()
-        groupSession = nil
-        activate()
     }
 
-    func handleSessions() {
+    /// Wait for sessions to connect
+    func beginWaitingForSessions() {
 
         async {
 
-            for await session in ChoosePuppyActivity.sessions() {
+            for await session in GA.sessions() {
 
                 configureGroupSession(session)
             }
         }
     }
 
-    func configureGroupSession(_ session: GroupSession<ChoosePuppyActivity>) {
+    private func configureGroupSession(_ session: GroupSession<GA>) {
 
         groupSession = session
 
@@ -117,8 +143,9 @@ class GroupActivityHandler: NSObject {
 
             if case .invalidated = state {
 
-                self?.groupSession = nil
-                self?.subscriptions.removeAll()
+                self?.teardown()
+
+                self?.delegate?.connectionChanged()
             }
         }
         .store(in: &subscriptions)
@@ -126,28 +153,30 @@ class GroupActivityHandler: NSObject {
         groupSession?.$activeParticipants
             .sink { activeParticipants in
 
-                guard
-                    let activeParticipants = self.groupSession?.activeParticipants
-                else { return }
+                // if we don't have a latest message we don't need to update anybody
+                guard let latestMessage = self.latestMessage, let catchupMessage = GM(payload: latestMessage) else { return }
 
-                let newParticipants = activeParticipants.subtracting(activeParticipants)
+                let newParticipants = activeParticipants.subtracting(self.activeParticipants)
 
-                if let name = self.latestMessage?.puppyName {
+                if !newParticipants.isEmpty {
 
                     async {
+
                         do {
 
-                            try await self.messenger?.send(
-                                ChoosePuppyMessage(puppyName: name),
-                                to: .only(newParticipants))
+                            try await self.messenger?.send(catchupMessage, to: .only(newParticipants))
 
                         } catch {
 
-                            self.delegate?.report(error: .messageCatchupSendFail(error))
+                            self.delegate?.report(error: GroupActivityHandlerError.messageCatchupSendFail(error))
                         }
                     }
                 }
-             }
+
+                self.activeParticipants = activeParticipants
+
+                self.delegate?.connectionChanged()
+            }
             .store(in: &subscriptions)
 
         session.join()
@@ -159,32 +188,39 @@ class GroupActivityHandler: NSObject {
         delegate?.connectionChanged()
     }
 
-    func configureMessenger() {
+    /// Add a task to wait for messages for other devices in the session
+    /// and pass them on to the delegate.
+    private func configureMessenger() {
 
-        let puppyTask = detach { [weak self] in
+        let task = detach { [weak self] in
 
             guard let messenger = self?.messenger else { return }
 
-            for await (message, _) in messenger.messages(of: ChoosePuppyMessage.self) {
+            for await (message, _) in messenger.messages(of: GM.self) {
 
                 self?.handle(message)
             }
         }
 
-        tasks.insert(puppyTask)
+        tasks.insert(task)
     }
 
-    func handle(_ message: ChoosePuppyMessage) {
+    /// Forward a message from another device in the session to the delegate. Do
+    /// not forward messages which have passed their sell-by date.
+    /// - Parameter message: Message received from the other device. Must conform
+    /// to the GroupActivityMessage protocol, with a unique ID and timestamp.
+    private func handle(_ message: GM) {
 
         if latestMessage?.timestamp ?? Date.distantPast < message.timestamp {
 
             latestMessage = message
-            delegate?.updatePuppy(name: message.puppyName)
+            delegate?.update(message: message)
         }
-
     }
 
-    func send(puppyName: String) {
+    /// Pass a message to the other devices in this session. Report any error to the delegate.
+    /// - Parameter message: The structure to be passed.
+    func send(message: GM) {
 
         guard nil != messenger else { return }
 
@@ -192,11 +228,11 @@ class GroupActivityHandler: NSObject {
 
             do {
 
-                try await messenger?.send(ChoosePuppyMessage(puppyName: puppyName))
+                try await messenger?.send(message)
 
             } catch {
 
-                delegate?.report(error: .messageSendFail(error))
+                delegate?.report(error: GroupActivityHandlerError.messageSendFail(error))
             }
         }
     }

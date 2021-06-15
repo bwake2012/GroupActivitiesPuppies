@@ -7,10 +7,10 @@
 
 import Foundation
 
-struct ChoosePuppyMessage: Codable {
+struct ChoosePuppyMessage: GroupActivityMessage {
 
-    let id: UUID
-    let timestamp: Date
+    private(set) var id: UUID
+    private(set) var timestamp: Date
     let puppyName: String
 
     init(id: UUID = UUID(), timestamp: Date = Date(), puppyName: String) {
@@ -18,5 +18,15 @@ struct ChoosePuppyMessage: Codable {
         self.id = id
         self.timestamp = timestamp
         self.puppyName = puppyName
+    }
+
+    init?(payload: GroupActivityMessage) {
+
+        guard let payload = payload as? Self else {
+
+            return nil
+        }
+
+        self.init(puppyName: payload.puppyName)
     }
 }
