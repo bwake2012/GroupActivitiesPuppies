@@ -63,7 +63,7 @@ class GroupActivityHandler<GA: GroupActivity, GM: GroupActivityMessage>: NSObjec
         return groupSession?.activeParticipants.count ?? 0
     }
 
-    private var tasks = Set<Task.Handle<(), Never>>()
+    private var tasks = Set<Task<Void, Never>>()
 
     private var messenger: GroupSessionMessenger?
 
@@ -123,9 +123,7 @@ class GroupActivityHandler<GA: GroupActivity, GM: GroupActivityMessage>: NSObjec
 
     /// Wait for sessions to connect
     func beginWaitingForSessions() {
-
-        async {
-
+        Task {
             for await session in GA.sessions() {
 
                 configureGroupSession(session)
@@ -160,7 +158,7 @@ class GroupActivityHandler<GA: GroupActivity, GM: GroupActivityMessage>: NSObjec
 
                 if !newParticipants.isEmpty {
 
-                    async {
+                    Task {
 
                         do {
 
@@ -192,15 +190,15 @@ class GroupActivityHandler<GA: GroupActivity, GM: GroupActivityMessage>: NSObjec
     /// and pass them on to the delegate.
     private func configureMessenger() {
 
-        let task = detach { [weak self] in
-
+        let task = Task.detached(operation: { [weak self] in
+            
             guard let messenger = self?.messenger else { return }
 
             for await (message, _) in messenger.messages(of: GM.self) {
 
                 self?.handle(message)
             }
-        }
+        })
 
         tasks.insert(task)
     }
