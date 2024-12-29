@@ -7,17 +7,19 @@
 
 import Foundation
 
-struct ChoosePuppyMessage: GroupActivityMessage {
+struct ChoosePuppyMessage: GroupActivityMessage, Codable {
 
     private(set) var id: UUID
     private(set) var timestamp: Date
-    let puppyName: String
+    let fileName: String
+    let title: String
 
-    init(id: UUID = UUID(), timestamp: Date = Date(), puppyName: String) {
+    init(id: UUID = UUID(), timestamp: Date = Date(), fileName: String, title: String) {
 
         self.id = id
         self.timestamp = timestamp
-        self.puppyName = puppyName
+        self.fileName = fileName
+        self.title = title
     }
 
     init?(payload: GroupActivityMessage) {
@@ -27,6 +29,10 @@ struct ChoosePuppyMessage: GroupActivityMessage {
             return nil
         }
 
-        self.init(puppyName: payload.puppyName)
+        self.init(
+            id: payload.id,
+            timestamp: payload.timestamp,
+            fileName: payload.fileName,
+            title: payload.title)
     }
 }

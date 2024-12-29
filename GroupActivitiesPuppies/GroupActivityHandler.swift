@@ -45,6 +45,7 @@ class GroupActivityHandler<GA: GroupActivity, GM: GroupActivityMessage>: NSObjec
 
     private var groupStateObserver = GroupStateObserver()
     var isEligibleForGroupSession: Bool = false
+    var groupStateSubscription = Set<AnyCancellable>()
 
     private weak var delegate: GroupActivityHandlerDelegate?
 
@@ -63,7 +64,7 @@ class GroupActivityHandler<GA: GroupActivity, GM: GroupActivityMessage>: NSObjec
         return groupSession?.activeParticipants.count ?? 0
     }
 
-    private var tasks = Set<Task<Void, Never>>()
+    private var tasks = Set<Task<(), Never>>()
 
     private var messenger: GroupSessionMessenger?
 
@@ -76,6 +77,14 @@ class GroupActivityHandler<GA: GroupActivity, GM: GroupActivityMessage>: NSObjec
     private var subscriptions = Set<AnyCancellable>()
 
     private var activity: GA?
+
+    deinit {
+
+        delegate = nil
+        reset()
+        groupStateSubscription.forEach { $0.cancel() }
+        groupStateSubscription.removeAll()
+    }
 
     /// Create the activity handler, and set up an observer
     /// for whether or not we have a FaceTime connection.
@@ -90,14 +99,29 @@ class GroupActivityHandler<GA: GroupActivity, GM: GroupActivityMessage>: NSObjec
 
             self?.delegate?.connectionChanged()
         }
-        .store(in: &subscriptions)
+        .store(in: &groupStateSubscription)
     }
 
     func activate() {
 
-        activity?.activate()
+        guard let activity = self.activity else {
+            preconditionFailure("Attempt to activate misconfigured group activity!")
+        }
 
-        self.delegate?.connectionChanged()
+        // let's not try to activate a session if we already have one.
+        guard nil == self.groupSession else { return }
+
+        Task {
+            do {
+                _ = try await activity.activate()
+                self.delegate?.connectionChanged()
+            }
+            catch {
+                self.delegate?.report(error: error)
+            }
+        }
+
+        return
     }
 
     func reset() {
@@ -118,17 +142,22 @@ class GroupActivityHandler<GA: GroupActivity, GM: GroupActivityMessage>: NSObjec
         messenger = nil
         tasks.forEach { $0.cancel() }
         tasks = []
-        subscriptions = []
+        subscriptions.removeAll()
     }
 
     /// Wait for sessions to connect
     func beginWaitingForSessions() {
-        Task {
-            for await session in GA.sessions() {
 
-                configureGroupSession(session)
+        let task =
+            Task {
+
+                for await session in GA.sessions() {
+
+                    configureGroupSession(session)
+                }
             }
-        }
+
+        tasks.insert(task)
     }
 
     private func configureGroupSession(_ session: GroupSession<GA>) {
@@ -158,17 +187,20 @@ class GroupActivityHandler<GA: GroupActivity, GM: GroupActivityMessage>: NSObjec
 
                 if !newParticipants.isEmpty {
 
-                    Task {
+                    let task =
+                        Task {
 
-                        do {
+                            do {
 
-                            try await self.messenger?.send(catchupMessage, to: .only(newParticipants))
+                                try await self.messenger?.send(catchupMessage, to: .only(newParticipants))
 
-                        } catch {
+                            } catch {
 
-                            self.delegate?.report(error: GroupActivityHandlerError.messageCatchupSendFail(error))
+                                self.delegate?.report(error: GroupActivityHandlerError.messageCatchupSendFail(error))
+                            }
                         }
-                    }
+
+                    self.tasks.insert(task)
                 }
 
                 self.activeParticipants = activeParticipants
@@ -181,24 +213,26 @@ class GroupActivityHandler<GA: GroupActivity, GM: GroupActivityMessage>: NSObjec
 
         self.messenger = GroupSessionMessenger(session: session)
 
-        configureMessenger()
+        configure(messenger)
 
         delegate?.connectionChanged()
     }
 
     /// Add a task to wait for messages for other devices in the session
     /// and pass them on to the delegate.
-    private func configureMessenger() {
+    private func configure(_ messenger: GroupSessionMessenger?) {
 
-        let task = Task.detached(operation: { [weak self] in
-            
+        guard nil != messenger else { return }
+
+        let task = Task.detached { [weak self] in
+
             guard let messenger = self?.messenger else { return }
 
             for await (message, _) in messenger.messages(of: GM.self) {
 
                 self?.handle(message)
             }
-        })
+        }
 
         tasks.insert(task)
     }
@@ -222,7 +256,7 @@ class GroupActivityHandler<GA: GroupActivity, GM: GroupActivityMessage>: NSObjec
 
         guard nil != messenger else { return }
 
-        async {
+        Task {
 
             do {
 
