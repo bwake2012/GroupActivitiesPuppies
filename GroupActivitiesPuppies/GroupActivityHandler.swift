@@ -19,7 +19,7 @@ protocol GroupActivityMessage: Codable {
 
 protocol GroupActivityHandlerDelegate: AnyObject {
 
-    func connectionChanged()
+    func stateChanged()
     func update<M: GroupActivityMessage>(message: M)
     func report(error: Error)
 }
@@ -51,7 +51,7 @@ class GroupActivityHandler<GA: GroupActivity, GM: GroupActivityMessage>: NSObjec
 
     var canConnect: Bool {
 
-        return self.isEligibleForGroupSession
+        return self.groupStateObserver.isEligibleForGroupSession
     }
 
     var isConnected: Bool {
@@ -97,7 +97,7 @@ class GroupActivityHandler<GA: GroupActivity, GM: GroupActivityMessage>: NSObjec
 
         groupStateObserver.$isEligibleForGroupSession.sink { [weak self] isElegibleForGroupSession in
 
-            self?.delegate?.connectionChanged()
+            self?.delegate?.stateChanged()
         }
         .store(in: &groupStateSubscription)
     }
@@ -114,7 +114,7 @@ class GroupActivityHandler<GA: GroupActivity, GM: GroupActivityMessage>: NSObjec
         Task {
             do {
                 _ = try await activity.activate()
-                self.delegate?.connectionChanged()
+                self.delegate?.stateChanged()
             }
             catch {
                 self.delegate?.report(error: error)
@@ -134,7 +134,7 @@ class GroupActivityHandler<GA: GroupActivity, GM: GroupActivityMessage>: NSObjec
         groupSession?.leave()
         groupSession = nil
 
-        delegate?.connectionChanged()
+        delegate?.stateChanged()
     }
 
     private func teardown() {
@@ -171,9 +171,10 @@ class GroupActivityHandler<GA: GroupActivity, GM: GroupActivityMessage>: NSObjec
             if case .invalidated = state {
 
                 self?.teardown()
-
-                self?.delegate?.connectionChanged()
+                self?.groupSession = nil
             }
+
+            self?.delegate?.stateChanged()
         }
         .store(in: &subscriptions)
 
@@ -205,7 +206,7 @@ class GroupActivityHandler<GA: GroupActivity, GM: GroupActivityMessage>: NSObjec
 
                 self.activeParticipants = activeParticipants
 
-                self.delegate?.connectionChanged()
+                self.delegate?.stateChanged()
             }
             .store(in: &subscriptions)
 
@@ -215,7 +216,7 @@ class GroupActivityHandler<GA: GroupActivity, GM: GroupActivityMessage>: NSObjec
 
         configure(messenger)
 
-        delegate?.connectionChanged()
+        delegate?.stateChanged()
     }
 
     /// Add a task to wait for messages for other devices in the session

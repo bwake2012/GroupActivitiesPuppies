@@ -24,25 +24,7 @@
 		C472C0112675221700319A91 /* ChoosePuppyMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C472C0102675221700319A91 /* ChoosePuppyMessage.swift */; };
 		C472C01326758BB100319A91 /* SnowyTricolorSheltie.png in Resources */ = {isa = PBXBuildFile; fileRef = C472C01226758BB100319A91 /* SnowyTricolorSheltie.png */; };
 		C4B6FE212D0D2205004FE456 /* GroupActivitiesPuppyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B6FE202D0D2205004FE456 /* GroupActivitiesPuppyView.swift */; };
-		C4B6FE222D0D2205004FE456 /* GroupActivitiesPuppyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B6FE202D0D2205004FE456 /* GroupActivitiesPuppyView.swift */; };
 		C4BA7E1A2D1C8DBC00B16704 /* Buddy2 Small.png in Resources */ = {isa = PBXBuildFile; fileRef = C4BA7E192D1C8DBC00B16704 /* Buddy2 Small.png */; };
-		C4BA7E1B2D1C8DBC00B16704 /* Buddy2 Small.png in Resources */ = {isa = PBXBuildFile; fileRef = C4BA7E192D1C8DBC00B16704 /* Buddy2 Small.png */; };
-		C4BF2D7F2CFEAD54004774ED /* GroupActivitiesPuppyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41264692672A4B80035983F /* GroupActivitiesPuppyViewController.swift */; };
-		C4BF2D802CFEAD54004774ED /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41264652672A4B80035983F /* AppDelegate.swift */; };
-		C4BF2D812CFEAD54004774ED /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41264672672A4B80035983F /* SceneDelegate.swift */; };
-		C4BF2D822CFEAD54004774ED /* ChoosePuppyActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41264DF2672BE730035983F /* ChoosePuppyActivity.swift */; };
-		C4BF2D832CFEAD54004774ED /* GroupActivityHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C472C00E26751FDF00319A91 /* GroupActivityHandler.swift */; };
-		C4BF2D842CFEAD54004774ED /* ChoosePuppyMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C472C0102675221700319A91 /* ChoosePuppyMessage.swift */; };
-		C4BF2D872CFEAD54004774ED /* Buddy.png in Resources */ = {isa = PBXBuildFile; fileRef = C41264CF2672A7380035983F /* Buddy.png */; };
-		C4BF2D882CFEAD54004774ED /* corgi.png in Resources */ = {isa = PBXBuildFile; fileRef = C41264CC2672A7380035983F /* corgi.png */; };
-		C4BF2D892CFEAD54004774ED /* blank.png in Resources */ = {isa = PBXBuildFile; fileRef = C41264C82672A7380035983F /* blank.png */; };
-		C4BF2D8A2CFEAD54004774ED /* SnowyTricolorSheltie.png in Resources */ = {isa = PBXBuildFile; fileRef = C472C01226758BB100319A91 /* SnowyTricolorSheltie.png */; };
-		C4BF2D8B2CFEAD54004774ED /* AnnaAvatar.png in Resources */ = {isa = PBXBuildFile; fileRef = C41264CE2672A7380035983F /* AnnaAvatar.png */; };
-		C4BF2D8C2CFEAD54004774ED /* Pontus.png in Resources */ = {isa = PBXBuildFile; fileRef = C41264CD2672A7380035983F /* Pontus.png */; };
-		C4BF2D8D2CFEAD54004774ED /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C41264702672A4B90035983F /* LaunchScreen.storyboard */; };
-		C4BF2D8E2CFEAD54004774ED /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C412646E2672A4B90035983F /* Assets.xcassets */; };
-		C4BF2D902CFEAD54004774ED /* AmericanEskimo.png in Resources */ = {isa = PBXBuildFile; fileRef = C41264DD2672BC160035983F /* AmericanEskimo.png */; };
-		C4BF2D912CFEAD54004774ED /* Boo.png in Resources */ = {isa = PBXBuildFile; fileRef = C41264C92672A7380035983F /* Boo.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -68,19 +50,11 @@
 		C472C0142676787800319A91 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		C4B6FE202D0D2205004FE456 /* GroupActivitiesPuppyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupActivitiesPuppyView.swift; sourceTree = "<group>"; };
 		C4BA7E192D1C8DBC00B16704 /* Buddy2 Small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Buddy2 Small.png"; sourceTree = "<group>"; };
-		C4BF2D952CFEAD54004774ED /* GroupActivitiesPuppies for visionOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "GroupActivitiesPuppies for visionOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C4BF2D962CFEAD54004774ED /* GroupActivitiesPuppies for Vision Pro-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "GroupActivitiesPuppies for Vision Pro-Info.plist"; path = "/Users/Bob/Development/iOS 15/Bob Wakefield/GroupActivitiesPuppies/GroupActivitiesPuppies for Vision Pro-Info.plist"; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		C412645F2672A4B80035983F /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		C4BF2D852CFEAD54004774ED /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -104,7 +78,6 @@
 			isa = PBXGroup;
 			children = (
 				C41264622672A4B80035983F /* GroupActivitiesPuppies.app */,
-				C4BF2D952CFEAD54004774ED /* GroupActivitiesPuppies for visionOS.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -164,23 +137,6 @@
 			productReference = C41264622672A4B80035983F /* GroupActivitiesPuppies.app */;
 			productType = "com.apple.product-type.application";
 		};
-		C4BF2D7D2CFEAD54004774ED /* GroupActivitiesPuppies for visionOS */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = C4BF2D922CFEAD54004774ED /* Build configuration list for PBXNativeTarget "GroupActivitiesPuppies for visionOS" */;
-			buildPhases = (
-				C4BF2D7E2CFEAD54004774ED /* Sources */,
-				C4BF2D852CFEAD54004774ED /* Frameworks */,
-				C4BF2D862CFEAD54004774ED /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = "GroupActivitiesPuppies for visionOS";
-			productName = GroupActivitiesPuppies;
-			productReference = C4BF2D952CFEAD54004774ED /* GroupActivitiesPuppies for visionOS.app */;
-			productType = "com.apple.product-type.application";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -210,7 +166,6 @@
 			projectRoot = "";
 			targets = (
 				C41264612672A4B80035983F /* GroupActivitiesPuppies */,
-				C4BF2D7D2CFEAD54004774ED /* GroupActivitiesPuppies for visionOS */,
 			);
 		};
 /* End PBXProject section */
@@ -234,24 +189,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		C4BF2D862CFEAD54004774ED /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				C4BF2D872CFEAD54004774ED /* Buddy.png in Resources */,
-				C4BF2D882CFEAD54004774ED /* corgi.png in Resources */,
-				C4BF2D892CFEAD54004774ED /* blank.png in Resources */,
-				C4BF2D8A2CFEAD54004774ED /* SnowyTricolorSheltie.png in Resources */,
-				C4BF2D8B2CFEAD54004774ED /* AnnaAvatar.png in Resources */,
-				C4BF2D8C2CFEAD54004774ED /* Pontus.png in Resources */,
-				C4BA7E1B2D1C8DBC00B16704 /* Buddy2 Small.png in Resources */,
-				C4BF2D8D2CFEAD54004774ED /* LaunchScreen.storyboard in Resources */,
-				C4BF2D8E2CFEAD54004774ED /* Assets.xcassets in Resources */,
-				C4BF2D902CFEAD54004774ED /* AmericanEskimo.png in Resources */,
-				C4BF2D912CFEAD54004774ED /* Boo.png in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -266,20 +203,6 @@
 				C472C00F26751FDF00319A91 /* GroupActivityHandler.swift in Sources */,
 				C4B6FE212D0D2205004FE456 /* GroupActivitiesPuppyView.swift in Sources */,
 				C472C0112675221700319A91 /* ChoosePuppyMessage.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		C4BF2D7E2CFEAD54004774ED /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				C4BF2D7F2CFEAD54004774ED /* GroupActivitiesPuppyViewController.swift in Sources */,
-				C4BF2D802CFEAD54004774ED /* AppDelegate.swift in Sources */,
-				C4BF2D812CFEAD54004774ED /* SceneDelegate.swift in Sources */,
-				C4BF2D822CFEAD54004774ED /* ChoosePuppyActivity.swift in Sources */,
-				C4BF2D832CFEAD54004774ED /* GroupActivityHandler.swift in Sources */,
-				C4B6FE222D0D2205004FE456 /* GroupActivitiesPuppyView.swift in Sources */,
-				C4BF2D842CFEAD54004774ED /* ChoosePuppyMessage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -437,9 +360,12 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = net.cockleburr.GroupActivitiesPuppies;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator xros xrsimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = "1,2,7";
 			};
 			name = Debug;
 		};
@@ -465,73 +391,12 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = net.cockleburr.GroupActivitiesPuppies;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Release;
-		};
-		C4BF2D932CFEAD54004774ED /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = GroupActivitiesPuppies/GroupActivitiesPuppies.entitlements;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 8G7W6WCEM9;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "GroupActivitiesPuppies for Vision Pro-Info.plist";
-				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = net.cockleburr.GroupActivitiesPuppies;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SUPPORTED_PLATFORMS = "xros xrsimulator";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator xros xrsimulator";
 				SUPPORTS_MACCATALYST = NO;
-				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 7;
-			};
-			name = Debug;
-		};
-		C4BF2D942CFEAD54004774ED /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = GroupActivitiesPuppies/GroupActivitiesPuppies.entitlements;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 8G7W6WCEM9;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "GroupActivitiesPuppies for Vision Pro-Info.plist";
-				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = net.cockleburr.GroupActivitiesPuppies;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SUPPORTED_PLATFORMS = "xros xrsimulator";
-				SUPPORTS_MACCATALYST = NO;
-				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 7;
+				TARGETED_DEVICE_FAMILY = "1,2,7";
 			};
 			name = Release;
 		};
@@ -552,15 +417,6 @@
 			buildConfigurations = (
 				C41264772672A4B90035983F /* Debug */,
 				C41264782672A4B90035983F /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		C4BF2D922CFEAD54004774ED /* Build configuration list for PBXNativeTarget "GroupActivitiesPuppies for visionOS" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				C4BF2D932CFEAD54004774ED /* Debug */,
-				C4BF2D942CFEAD54004774ED /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

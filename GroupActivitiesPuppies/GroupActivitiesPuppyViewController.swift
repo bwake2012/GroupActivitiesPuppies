@@ -29,8 +29,20 @@ class GroupActivitiesPuppyViewController: UIViewController {
 
     var puppyView: GroupActivitiesPuppyView?
 
-    var statusLabel: UILabel? {
-        puppyView?.statusLabel
+    var eligibilityStatusLabel: UILabel? {
+        puppyView?.eligibilityStatusLabel
+    }
+
+    var sessionStatusLabel: UILabel? {
+        puppyView?.sessionStatusLabel
+    }
+
+    var participantsStatusLabel: UILabel? {
+        puppyView?.participantsStatusLabel
+    }
+
+    var generalStatusLabel: UILabel? {
+        puppyView?.generalStatusLabel
     }
 
     var connectButton: UIButton? {
@@ -45,6 +57,10 @@ class GroupActivitiesPuppyViewController: UIViewController {
         puppyView?.currentDogLabel
     }
 
+    var refreshButton: UIButton? {
+        puppyView?.refreshButton
+    }
+
     var puppyButtons: [UIButton] = []
 
     @objc func connectTapped(_ sender: UIButton) {
@@ -52,10 +68,16 @@ class GroupActivitiesPuppyViewController: UIViewController {
         if !isConnected {
 
             activityHandler?.activate()
+        }
+    }
 
-        } else {
+    @objc func refreshTapped(_ sender: UIButton) {
 
-            activityHandler?.reset()
+        DispatchQueue.main.async {
+            self.participantsStatusLabel?.text = "Participants: \(self.participantCount)"
+            self.eligibilityStatusLabel?.text = self.canConnect ? "Eligible" : "Not eligible"
+            self.sessionStatusLabel?.text = self.isConnected ? "Connected" : "Not connected"
+            self.connectButton?.isEnabled = self.canConnect && !self.isConnected
         }
     }
 
@@ -82,6 +104,7 @@ class GroupActivitiesPuppyViewController: UIViewController {
 
             return $0
         } ?? []
+        puppyView?.refreshButton.addTarget(self, action: #selector(refreshTapped), for: .touchUpInside)
 
         self.view = puppyView
     }
@@ -100,13 +123,15 @@ class GroupActivitiesPuppyViewController: UIViewController {
 
 extension GroupActivitiesPuppyViewController: GroupActivityHandlerDelegate {
 
-    func connectionChanged() {
+    func stateChanged() {
 
         DispatchQueue.main.async {
 
             self.configureConnectButton()
 
-            print("Connections: \(self.participantCount)")
+            if let refreshButton = self.refreshButton {
+                self.refreshTapped(refreshButton)
+            }
         }
     }
 
@@ -122,7 +147,8 @@ extension GroupActivitiesPuppyViewController: GroupActivityHandlerDelegate {
 
             self.displayImage?.image = self.picture(for: message.fileName)
             self.displayString?.text = message.title
-            self.statusLabel?.text = nil
+            self.generalStatusLabel?.text = nil
+            self.connectButton?.isEnabled = !self.isConnected
         }
     }
 
@@ -130,7 +156,7 @@ extension GroupActivitiesPuppyViewController: GroupActivityHandlerDelegate {
 
         DispatchQueue.main.async {
 
-            self.statusLabel?.text = error.localizedDescription
+            self.generalStatusLabel?.text = error.localizedDescription
         }
     }
 
@@ -138,17 +164,20 @@ extension GroupActivitiesPuppyViewController: GroupActivityHandlerDelegate {
 
         guard let url = Bundle.main.url(forResource: puppyName, withExtension: "png")
         else {
-            preconditionFailure("No URL for \(puppyName).png")
+            generalStatusLabel?.text = "No URL for \(puppyName).png"
+            return nil
         }
 
         guard let data = try? Data(contentsOf: url, options: .uncachedRead)
         else {
-            preconditionFailure("No data from \(puppyName)")
+            generalStatusLabel?.text = "No data from \(puppyName)"
+            return nil
         }
 
         guard let image = UIImage(data: data)
         else {
-            preconditionFailure("Data from \(puppyName) is not an image.")
+            generalStatusLabel?.text = "Data from \(puppyName) is not an image."
+            return nil
         }
 
         return image
@@ -166,6 +195,8 @@ extension GroupActivitiesPuppyViewController: GroupActivityHandlerDelegate {
 
             self.connectButton?.setImage(image, for: .normal)
             self.connectButton?.setTitle(text, for: .normal)
+
+            self.connectButton?.isEnabled = self.canConnect && !self.isConnected
         }
     }
 }

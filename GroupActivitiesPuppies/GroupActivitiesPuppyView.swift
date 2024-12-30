@@ -65,7 +65,10 @@ class GroupActivitiesPuppyView: UIView {
         return label
     }
 
-    lazy var statusLabel: UILabel = buildLabel(text: "Normal")
+    lazy var eligibilityStatusLabel = buildLabel(text: "Ineligible")
+    lazy var sessionStatusLabel = buildLabel(text: "No session")
+    lazy var participantsStatusLabel = buildLabel(text: "0 participants")
+    lazy var generalStatusLabel: UILabel = buildLabel(text: "Normal")
 
     private lazy var copyrightLabel: UILabel = buildLabel(text: "2024 Cockleburr Software", alignment: .center)
 
@@ -83,6 +86,43 @@ class GroupActivitiesPuppyView: UIView {
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .systemBackground
         return view
+    }()
+
+    private lazy var statusDisplayStack: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.contentMode = .scaleAspectFit
+        stackView.setContentCompressionResistancePriority(.required, for: .vertical)
+        stackView.setContentHuggingPriority(.required, for: .vertical)
+        stackView.distribution = .fill
+        stackView.alignment = .leading
+        stackView.spacing = 8
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        return stackView
+    }()
+
+    private lazy var statusStack: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.contentMode = .scaleAspectFit
+        stackView.setContentCompressionResistancePriority(.required, for: .vertical)
+        stackView.setContentHuggingPriority(.required, for: .vertical)
+        stackView.distribution = .fill
+        stackView.alignment = .top
+        stackView.spacing = 8
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        return stackView
+    }()
+
+    lazy var refreshButton: UIButton = {
+        let button = UIButton()
+        button.contentMode = .scaleToFill
+        button.contentHorizontalAlignment = .center
+        button.contentVerticalAlignment = .center
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.configuration = .filled()
+        button.setTitle("Refresh", for: .normal)
+        return button
     }()
 
     private lazy var dogButtonStack: UIStackView = {
@@ -180,7 +220,7 @@ class GroupActivitiesPuppyView: UIView {
         view.addSubview(mainTitleLabel)
         view.addSubview(copyrightLabel)
         view.addSubview(scrollEnvelope)
-        view.addSubview(statusLabel)
+        view.addSubview(statusStack)
 
         scrollEnvelope.addSubview(scrollView)
 
@@ -199,6 +239,14 @@ class GroupActivitiesPuppyView: UIView {
         dogButtonStack.addArrangedSubview(buttonDog6)
         dogButtonStack.addArrangedSubview(buttonDog7)
         dogButtonStack.addArrangedSubview(buttonDog8)
+
+        statusDisplayStack.addArrangedSubview(eligibilityStatusLabel)
+        statusDisplayStack.addArrangedSubview(sessionStatusLabel)
+        statusDisplayStack.addArrangedSubview(participantsStatusLabel)
+        statusDisplayStack.addArrangedSubview(generalStatusLabel)
+
+        statusStack.addArrangedSubview(statusDisplayStack)
+        statusStack.addArrangedSubview(refreshButton)
     }
 
     // <------------- Constrains --------------->
@@ -218,10 +266,10 @@ class GroupActivitiesPuppyView: UIView {
             scrollEnvelope.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: leftPadding),
             view.trailingAnchor.constraint(equalTo: scrollEnvelope.trailingAnchor, constant: rightPadding),
 
-            statusLabel.topAnchor.constraint(equalTo: scrollEnvelope.bottomAnchor, constant: verticalSpacing),
-            statusLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: leftPadding),
-            view.trailingAnchor.constraint(equalTo: statusLabel.trailingAnchor, constant: rightPadding),
-            view.safeAreaLayoutGuide.bottomAnchor.constraint(equalTo: statusLabel.bottomAnchor, constant: bottomPadding),
+            statusStack.topAnchor.constraint(equalTo: scrollEnvelope.bottomAnchor, constant: verticalSpacing),
+            statusStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: leftPadding),
+            view.trailingAnchor.constraint(equalTo: statusStack.trailingAnchor, constant: rightPadding),
+            view.safeAreaLayoutGuide.bottomAnchor.constraint(equalTo: statusStack.bottomAnchor, constant: bottomPadding),
 
             scrollView.topAnchor.constraint(equalTo: scrollEnvelope.topAnchor),
             scrollView.bottomAnchor.constraint(equalTo: scrollEnvelope.bottomAnchor),
@@ -263,7 +311,7 @@ class GroupActivitiesPuppyView: UIView {
         addConstraints(to: view)
 
         view.backgroundColor = .systemBackground
-        statusLabel.backgroundColor = .secondarySystemBackground
+        statusStack.backgroundColor = .secondarySystemBackground
     }
 
 }
