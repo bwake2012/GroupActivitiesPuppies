@@ -2,6 +2,8 @@
 
 This is s proof-of-concept demonstrator for the new Group Activities for FaceTime available with iOS 15. It's an extension of my [MultipeerPuppies](https://github.com/bwake2012/MultiPeerPuppies) proof-of-concept demonstrator.
 
+![Apple Vision Pro](GroupActivitiesScreenshotVisionPro.png)
+
 Here's a link to video of an [early version](https://youtu.be/utvN5USIeCU).
 
 ## Acknowledgments:
